@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B73051F523FFF55200CD77A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73051F423FFF55200CD77A7 /* AppDelegate.swift */; };
-		B73051F723FFF55200CD77A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73051F623FFF55200CD77A7 /* SceneDelegate.swift */; };
 		B73051F923FFF55200CD77A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73051F823FFF55200CD77A7 /* ViewController.swift */; };
-		B73051FC23FFF55200CD77A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B73051FA23FFF55200CD77A7 /* Main.storyboard */; };
 		B73051FF23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B73051FD23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodeld */; };
 		B730520123FFF55400CD77A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B730520023FFF55400CD77A7 /* Assets.xcassets */; };
 		B730520423FFF55400CD77A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B730520223FFF55400CD77A7 /* LaunchScreen.storyboard */; };
@@ -19,9 +17,7 @@
 /* Begin PBXFileReference section */
 		B73051F123FFF55200CD77A7 /* TochkaNewsFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TochkaNewsFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B73051F423FFF55200CD77A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B73051F623FFF55200CD77A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B73051F823FFF55200CD77A7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B73051FB23FFF55200CD77A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B73051FE23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TochkaNewsFeed.xcdatamodel; sourceTree = "<group>"; };
 		B730520023FFF55400CD77A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B730520323FFF55400CD77A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,16 +54,46 @@
 		B73051F323FFF55200CD77A7 /* TochkaNewsFeed */ = {
 			isa = PBXGroup;
 			children = (
-				B73051F423FFF55200CD77A7 /* AppDelegate.swift */,
-				B73051F623FFF55200CD77A7 /* SceneDelegate.swift */,
+				B730520B23FFF6E200CD77A7 /* AppDelegate */,
+				B730520E23FFF75B00CD77A7 /* CoreData */,
 				B73051F823FFF55200CD77A7 /* ViewController.swift */,
-				B73051FA23FFF55200CD77A7 /* Main.storyboard */,
-				B730520023FFF55400CD77A7 /* Assets.xcassets */,
-				B730520223FFF55400CD77A7 /* LaunchScreen.storyboard */,
-				B730520523FFF55400CD77A7 /* Info.plist */,
-				B73051FD23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodeld */,
+				B730520D23FFF74200CD77A7 /* LaunchScreen */,
+				B730520C23FFF71900CD77A7 /* SupportingFiles */,
 			);
 			path = TochkaNewsFeed;
+			sourceTree = "<group>";
+		};
+		B730520B23FFF6E200CD77A7 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				B73051F423FFF55200CD77A7 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		B730520C23FFF71900CD77A7 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				B730520023FFF55400CD77A7 /* Assets.xcassets */,
+				B730520523FFF55400CD77A7 /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		B730520D23FFF74200CD77A7 /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B730520223FFF55400CD77A7 /* LaunchScreen.storyboard */,
+			);
+			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
+		B730520E23FFF75B00CD77A7 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				B73051FD23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -130,7 +156,6 @@
 			files = (
 				B730520423FFF55400CD77A7 /* LaunchScreen.storyboard in Resources */,
 				B730520123FFF55400CD77A7 /* Assets.xcassets in Resources */,
-				B73051FC23FFF55200CD77A7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,21 +169,12 @@
 				B73051F923FFF55200CD77A7 /* ViewController.swift in Sources */,
 				B73051F523FFF55200CD77A7 /* AppDelegate.swift in Sources */,
 				B73051FF23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodeld in Sources */,
-				B73051F723FFF55200CD77A7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B73051FA23FFF55200CD77A7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B73051FB23FFF55200CD77A7 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B730520223FFF55400CD77A7 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -290,7 +306,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 74W3SJL399;
-				INFOPLIST_FILE = TochkaNewsFeed/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TochkaNewsFeed/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -298,7 +314,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Denis-Soluyanov.TochkaNewsFeed";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -308,7 +324,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 74W3SJL399;
-				INFOPLIST_FILE = TochkaNewsFeed/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TochkaNewsFeed/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -316,7 +332,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Denis-Soluyanov.TochkaNewsFeed";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
