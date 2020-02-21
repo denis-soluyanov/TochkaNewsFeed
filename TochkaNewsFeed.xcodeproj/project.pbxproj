@@ -1,0 +1,360 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B73051F523FFF55200CD77A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73051F423FFF55200CD77A7 /* AppDelegate.swift */; };
+		B73051F723FFF55200CD77A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73051F623FFF55200CD77A7 /* SceneDelegate.swift */; };
+		B73051F923FFF55200CD77A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73051F823FFF55200CD77A7 /* ViewController.swift */; };
+		B73051FC23FFF55200CD77A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B73051FA23FFF55200CD77A7 /* Main.storyboard */; };
+		B73051FF23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B73051FD23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodeld */; };
+		B730520123FFF55400CD77A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B730520023FFF55400CD77A7 /* Assets.xcassets */; };
+		B730520423FFF55400CD77A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B730520223FFF55400CD77A7 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B73051F123FFF55200CD77A7 /* TochkaNewsFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TochkaNewsFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B73051F423FFF55200CD77A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B73051F623FFF55200CD77A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		B73051F823FFF55200CD77A7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B73051FB23FFF55200CD77A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B73051FE23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TochkaNewsFeed.xcdatamodel; sourceTree = "<group>"; };
+		B730520023FFF55400CD77A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B730520323FFF55400CD77A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B730520523FFF55400CD77A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B73051EE23FFF55200CD77A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B73051E823FFF55200CD77A7 = {
+			isa = PBXGroup;
+			children = (
+				B73051F323FFF55200CD77A7 /* TochkaNewsFeed */,
+				B73051F223FFF55200CD77A7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B73051F223FFF55200CD77A7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B73051F123FFF55200CD77A7 /* TochkaNewsFeed.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B73051F323FFF55200CD77A7 /* TochkaNewsFeed */ = {
+			isa = PBXGroup;
+			children = (
+				B73051F423FFF55200CD77A7 /* AppDelegate.swift */,
+				B73051F623FFF55200CD77A7 /* SceneDelegate.swift */,
+				B73051F823FFF55200CD77A7 /* ViewController.swift */,
+				B73051FA23FFF55200CD77A7 /* Main.storyboard */,
+				B730520023FFF55400CD77A7 /* Assets.xcassets */,
+				B730520223FFF55400CD77A7 /* LaunchScreen.storyboard */,
+				B730520523FFF55400CD77A7 /* Info.plist */,
+				B73051FD23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodeld */,
+			);
+			path = TochkaNewsFeed;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B73051F023FFF55200CD77A7 /* TochkaNewsFeed */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B730520823FFF55400CD77A7 /* Build configuration list for PBXNativeTarget "TochkaNewsFeed" */;
+			buildPhases = (
+				B73051ED23FFF55200CD77A7 /* Sources */,
+				B73051EE23FFF55200CD77A7 /* Frameworks */,
+				B73051EF23FFF55200CD77A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TochkaNewsFeed;
+			productName = TochkaNewsFeed;
+			productReference = B73051F123FFF55200CD77A7 /* TochkaNewsFeed.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B73051E923FFF55200CD77A7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = "Denis Soluyanov";
+				TargetAttributes = {
+					B73051F023FFF55200CD77A7 = {
+						CreatedOnToolsVersion = 11.3;
+					};
+				};
+			};
+			buildConfigurationList = B73051EC23FFF55200CD77A7 /* Build configuration list for PBXProject "TochkaNewsFeed" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B73051E823FFF55200CD77A7;
+			productRefGroup = B73051F223FFF55200CD77A7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B73051F023FFF55200CD77A7 /* TochkaNewsFeed */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B73051EF23FFF55200CD77A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B730520423FFF55400CD77A7 /* LaunchScreen.storyboard in Resources */,
+				B730520123FFF55400CD77A7 /* Assets.xcassets in Resources */,
+				B73051FC23FFF55200CD77A7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B73051ED23FFF55200CD77A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B73051F923FFF55200CD77A7 /* ViewController.swift in Sources */,
+				B73051F523FFF55200CD77A7 /* AppDelegate.swift in Sources */,
+				B73051FF23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodeld in Sources */,
+				B73051F723FFF55200CD77A7 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B73051FA23FFF55200CD77A7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B73051FB23FFF55200CD77A7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B730520223FFF55400CD77A7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B730520323FFF55400CD77A7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B730520623FFF55400CD77A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B730520723FFF55400CD77A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B730520923FFF55400CD77A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 74W3SJL399;
+				INFOPLIST_FILE = TochkaNewsFeed/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Denis-Soluyanov.TochkaNewsFeed";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B730520A23FFF55400CD77A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 74W3SJL399;
+				INFOPLIST_FILE = TochkaNewsFeed/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Denis-Soluyanov.TochkaNewsFeed";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B73051EC23FFF55200CD77A7 /* Build configuration list for PBXProject "TochkaNewsFeed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B730520623FFF55400CD77A7 /* Debug */,
+				B730520723FFF55400CD77A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B730520823FFF55400CD77A7 /* Build configuration list for PBXNativeTarget "TochkaNewsFeed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B730520923FFF55400CD77A7 /* Debug */,
+				B730520A23FFF55400CD77A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B73051FD23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B73051FE23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodel */,
+			);
+			currentVersion = B73051FE23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodel */;
+			path = TochkaNewsFeed.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = B73051E923FFF55200CD77A7 /* Project object */;
+}
