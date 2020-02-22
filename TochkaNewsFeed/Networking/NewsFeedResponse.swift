@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct NewsResponse: Decodable {
+struct NewsFeedResponse: Decodable {
     let status       : String
     let totalResults : Int
-    let articles     : [Article]
+    let articles     : [ArticleResponse]
 }
 
-struct Article: Decodable {
+struct ArticleResponse: Decodable {
     let source      : Source?
     let author      : String?
     let title       : String

@@ -14,46 +14,35 @@ final class NewsFeedNetworkManager {
     private let domain  : String
     
     static let shared: NewsFeedNetworkManager = {
-        let instance = NewsFeedNetworkManager()
-        return instance
+        return NewsFeedNetworkManager(apiKey: NEWS_FEED_API_KEY, domain: NEWS_FEED_API_DOMAIN)
     }()
     
-    private init() {
+    private init(apiKey: String, domain: String) {
         session = URLSession(configuration: URLSessionConfiguration.default)
-        apiKey  = NEWS_FEED_API_KEY
-        domain  = NEWS_FEED_API_DOMAIN
+        self.apiKey = apiKey
+        self.domain = domain
     }
-    
-    func fetch(request: URLRequest) {
-        session.dataTask(with: request) { (data, response, error) in
-            guard let response = response as? HTTPURLResponse else {
-                return
-            }
-            guard response.statusCode == 200 else {
-                print("response: \(response.statusCode)")
-                print(response)
-                return
-            }
-            guard error == nil else {
-                print("\(error!.localizedDescription)")
-                return
-            }
-            guard let jsonData = data else {
-                return
-            }
+ 
+    func fetchNews(with queries: [NewsFeedAPI], completion: @escaping ([ArticleResponse]?) -> Void) {
+        guard let request = createRequest(with: queries.map{ $0.urlQueryItem }) else {
+            completion(nil)
+            return
+        }
+        fetch(request: request) { jsonData in
+            guard let jsonData = jsonData else { return }
             
             do {
-                let response = try JSONDecoder().decode(NewsResponse.self, from: jsonData)
-                
-                for article in response.articles {
-                    print(article.author)
-                }
-                
+                let newsResponse = try JSONDecoder().decode(NewsFeedResponse.self, from: jsonData)
+                completion(newsResponse.articles)
             } catch {
                 print(error)
+                completion(nil)
             }
-        }.resume()
+        }
     }
+}
+
+private extension NewsFeedNetworkManager {
     
     func createRequest(with queries: [URLQueryItem]) -> URLRequest? {
         guard var components = URLComponents(string: NEWS_FEED_API_DOMAIN) else {
@@ -64,5 +53,31 @@ final class NewsFeedNetworkManager {
         
         guard let url = components.url else { return nil }
         return URLRequest(url: url)
+    }
+    
+    func fetch(request: URLRequest, completion: @escaping (Data?) -> Void) {
+        session.dataTask(with: request) { (data, response, error) in
+            guard let response = response as? HTTPURLResponse else {
+                print("Response doesn't comply to HTTP protocol")
+                completion(nil)
+                return
+            }
+            guard response.statusCode == 200 else {
+                print("response code: \(response.statusCode)")
+                completion(nil)
+                return
+            }
+            guard error == nil else {
+                print("\(error!.localizedDescription)")
+                completion(nil)
+                return
+            }
+            guard let jsonData = data else {
+                print("No data available in response body")
+                completion(nil)
+                return
+            }
+            completion(jsonData)
+        }.resume()
     }
 }

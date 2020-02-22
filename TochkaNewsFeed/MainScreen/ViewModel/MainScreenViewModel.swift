@@ -9,15 +9,24 @@
 import UIKit
 
 final class MainScreenViewModel: BaseScreenViewModel {
+    private var articles: [ArticleResponse] = []
     
-    func configure(view: UIView) {
-        let tableView = createTableView()
-        view.addSubview(tableView)
+    var cellViewModelClass: BaseCellViewModel.Type {
+        return NewsFeedCellViewModel.self
     }
     
-    private func createTableView() -> UITableView {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
+    var stopPagination: Bool = true
+    
+    func configure(view: UIView) {
+        //
+    }
+    
+    func numberOfRows() -> Int {
+        return articles.count
+    }
+    
+    func cellViewModel(at indexPath: IndexPath) -> BaseCellViewModel? {
+//        NewsFeedCell(
+        return NewsFeedCellViewModel()
     }
 }

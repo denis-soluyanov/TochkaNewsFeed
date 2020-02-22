@@ -34,4 +34,20 @@ final class CoreDataManager {
             }
         }
     }
+    
+    func fetchAll<Object: NSManagedObject>(_: Object.Type, predicate: NSPredicate? = nil) -> [Object]? {
+        let entityName = String(describing: Object.self)
+        let fetchRequest = NSFetchRequest<Object>(entityName: entityName)
+        
+        fetchRequest.predicate = predicate
+        
+        var result: [Object]?
+        
+        do {
+            result = try context.fetch(fetchRequest)
+        } catch {
+            print(error)
+        }
+        return result
+    }
 }
