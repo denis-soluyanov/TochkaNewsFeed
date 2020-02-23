@@ -13,16 +13,18 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let coreDataManager = CoreDataManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = MainViewController(viewModel: MainScreenViewModel())
+        
+        let viewController = MainViewController(viewModel: MainScreenViewModel())
+        window?.rootViewController = UINavigationController(rootViewController: viewController)
         return true
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        // TODO: save to coredata
+        coreDataManager.saveContext()
     }
 }
-

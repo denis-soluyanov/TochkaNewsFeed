@@ -10,11 +10,13 @@ import UIKit
 
 protocol BaseScreenViewModel: class {
     
+    var screenTitle: String { get }
+    
+    var numberOfRows: Int { get }
+    
     var cellViewModelClass: BaseCellViewModel.Type { get }
     
-    func configure(view: UIView)
+    func cellViewModel(at indexPath: IndexPath) -> BaseCellViewModel
     
-    func numberOfRows() -> Int
-    
-    func cellViewModel(at indexPath: IndexPath) -> BaseCellViewModel?
+    func fetch()
 }

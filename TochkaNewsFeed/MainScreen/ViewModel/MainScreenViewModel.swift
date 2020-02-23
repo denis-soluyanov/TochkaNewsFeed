@@ -9,24 +9,31 @@
 import UIKit
 
 final class MainScreenViewModel: BaseScreenViewModel {
-    private var articles: [ArticleResponse] = []
+    private let articles = Box<[ArticleResponse]>([])
+    
+    var numberOfRows: Int {
+        return articles.value.count
+    }
+    
+    let screenTitle: String = "NewsFeed"
     
     var cellViewModelClass: BaseCellViewModel.Type {
         return NewsFeedCellViewModel.self
     }
     
-    var stopPagination: Bool = true
-    
-    func configure(view: UIView) {
-        //
+    func cellViewModel(at indexPath: IndexPath) -> BaseCellViewModel {
+        return NewsFeedCellViewModel(article: articles.value[indexPath.row])
     }
     
-    func numberOfRows() -> Int {
-        return articles.count
+    func fetch() {
+        let queries = [ NewsFeedAPI.keyWords(value: "coronavirus") ]
+        NewsFeedNetworkManager.shared.fetchNews(with: queries) { response in
+            guard let articles = response else {
+                return
+            }
+            self.articles.value = articles
+        }
     }
     
-    func cellViewModel(at indexPath: IndexPath) -> BaseCellViewModel? {
-//        NewsFeedCell(
-        return NewsFeedCellViewModel()
-    }
+    
 }

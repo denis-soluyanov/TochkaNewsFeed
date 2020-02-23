@@ -10,11 +10,16 @@ import UIKit
 
 final class NewsFeedCellViewModel: BaseCellViewModel {
     
-    static var cellClass: UITableViewCell.Type = NewsFeedCell.self
+    static let cellClass   : UITableViewCell.Type = NewsFeedCell.self
+    static let cellReuseId : String  = "NewsFeedCellReuseId"
+    static let cellHeight  : CGFloat = 100.0
     
-    static let cellReuseIdentifier: String = "NewsFeedCellReuseIdentifier"
+    let title       = Box<String>("")
+    let description = Box<String>("")
+    let image       = Box<UIImage?>(.imagePlaceholder)
     
-    func configure(cell: UITableViewCell) {
-        cell.textLabel?.text = "Text"
+    init(article: ArticleResponse) {
+        title.value = article.title
+        description.value = article.description
     }
 }
