@@ -7,23 +7,33 @@
 //
 
 import UIKit
+import CoreData
 
 class BaseViewController: UIViewController {
     let viewModel: BaseScreenViewModel
     
-    private lazy var cellReuseIdentifier: String = {
+    private lazy var cellReuseId: String = {
         return viewModel.cellViewModelClass.cellReuseId
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        indicator.isHidden = false
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
     }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         let cellClass = viewModel.cellViewModelClass.cellClass
-        tableView.delegate = self
-        tableView.dataSource = self
+        tableView.delegate        = self
+        tableView.dataSource      = self
         tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
+        tableView.separatorStyle  = .singleLine
         tableView.allowsSelection = false
-        tableView.register(cellClass, forCellReuseIdentifier: cellReuseIdentifier)
+        tableView.tableFooterView = UIView()
+        tableView.register(cellClass, forCellReuseIdentifier: cellReuseId)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -31,6 +41,7 @@ class BaseViewController: UIViewController {
     init(viewModel: BaseScreenViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        self.viewModel.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -41,6 +52,11 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(tableView)
         setConstraintsForTableView()
+        
+        view.addSubview(activityIndicator)
+        setConstraintsForActivityIndicator()
+        activityIndicator.startAnimating()
+        
         setupNavigationBar()
     }
     
@@ -59,6 +75,13 @@ class BaseViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             .isActive = true
     }
+    
+    private func setConstraintsForActivityIndicator() {
+        activityIndicator.centerYAnchor.constraint(equalTo: tableView.centerYAnchor)
+            .isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: tableView.centerXAnchor)
+            .isActive = true
+    }
 }
 
 // MARK: - UITableViewDataSource & UITableViewDelegate
@@ -68,10 +91,18 @@ extension BaseViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
+        return tableView.dequeueReusableCell(withIdentifier: cellReuseId, for: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return viewModel.cellViewModelClass.cellHeight
+    }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+extension BaseViewController: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("notification from fetchRC\nreloading tableView...")
+        tableView.reloadData()
     }
 }

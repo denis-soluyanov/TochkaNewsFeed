@@ -9,7 +9,7 @@
 import Foundation
 
 let NEWS_FEED_API_DOMAIN = "http://newsapi.org/v2/everything"
-let NEWS_FEED_API_KEY    = "26c3b0681dbb43dab2537ec57e08b13f"
+let NEWS_FEED_API_KEY    = "514f8855936b461ba9f58ed2fe6c16a1"
 
 enum NewsFeedAPI {
     /* Keywords or phrases to search for in the article title and body */
@@ -29,6 +29,9 @@ enum NewsFeedAPI {
     
     /* Use this to page through the results */
     case page(value: Int)
+    
+    /* Key for access to API */
+    case apiKey(value: String)
 }
 
 enum NewsLanguage: String {
@@ -74,6 +77,9 @@ extension NewsFeedAPI {
             
         case let .page(value):
             return URLQueryItem(name: "page", value: String(value))
+            
+        case let .apiKey(value):
+            return URLQueryItem(name: "apiKey", value: value)
         }
     }
 }

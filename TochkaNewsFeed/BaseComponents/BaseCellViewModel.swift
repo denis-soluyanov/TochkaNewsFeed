@@ -14,7 +14,7 @@ protocol BaseCellViewModel: class {
     static var cellReuseId : String  { get }
     static var cellHeight  : CGFloat { get }
     
-    var title       : Box<String>   { get }
-    var description : Box<String>   { get }
+    var title       : Box<String?>  { get }
+    var description : Box<String?>  { get }
     var image       : Box<UIImage?> { get }
 }

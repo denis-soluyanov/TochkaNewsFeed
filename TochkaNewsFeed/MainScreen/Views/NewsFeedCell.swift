@@ -11,7 +11,7 @@ import UIKit
 final class NewsFeedCell: UITableViewCell {
     
     var viewModel: NewsFeedCellViewModel! {
-        willSet(viewModel) {
+        didSet(viewModel) {
             bindViewModel()
         }
     }
@@ -33,6 +33,7 @@ final class NewsFeedCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     

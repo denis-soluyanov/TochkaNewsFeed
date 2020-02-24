@@ -20,34 +20,38 @@ final class CoreDataManager {
         return container
     }()
     
-    var context: NSManagedObjectContext {
+    private var context: NSManagedObjectContext {
         return container.viewContext
     }
     
+    private init() {}
+    
+    static let shared: CoreDataManager = {
+        return CoreDataManager()
+    }()
+    
     func saveContext () {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        context.perform {
+            if self.context.hasChanges {
+                do {
+                    try self.context.save()
+                } catch {
+                    let nserror = error as NSError
+                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                }
             }
         }
     }
     
-    func fetchAll<Object: NSManagedObject>(_: Object.Type, predicate: NSPredicate? = nil) -> [Object]? {
-        let entityName = String(describing: Object.self)
-        let fetchRequest = NSFetchRequest<Object>(entityName: entityName)
-        
-        fetchRequest.predicate = predicate
-        
-        var result: [Object]?
-        
-        do {
-            result = try context.fetch(fetchRequest)
-        } catch {
-            print(error)
-        }
-        return result
+    func save(_ block: @escaping (NSManagedObjectContext) -> Void) {
+        container.performBackgroundTask(block)
+    }
+    
+    func fetchedResultsController<T: NSManagedObject>(with request: NSFetchRequest<T>) -> NSFetchedResultsController<T> {
+        return NSFetchedResultsController<T>(
+            fetchRequest: request,
+            managedObjectContext: context,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
     }
 }

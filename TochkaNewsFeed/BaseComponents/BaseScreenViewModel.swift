@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol BaseScreenViewModel: class {
     
@@ -14,9 +15,15 @@ protocol BaseScreenViewModel: class {
     
     var numberOfRows: Int { get }
     
+    var stopPagination: Bool { get set }
+    
+    var delegate: NSFetchedResultsControllerDelegate? { get set }
+    
     var cellViewModelClass: BaseCellViewModel.Type { get }
     
     func cellViewModel(at indexPath: IndexPath) -> BaseCellViewModel
+    
+    func loadMoreContents()
     
     func fetch()
 }

@@ -14,12 +14,12 @@ final class NewsFeedCellViewModel: BaseCellViewModel {
     static let cellReuseId : String  = "NewsFeedCellReuseId"
     static let cellHeight  : CGFloat = 100.0
     
-    let title       = Box<String>("")
-    let description = Box<String>("")
+    let title       = Box<String?>("")
+    let description = Box<String?>("")
     let image       = Box<UIImage?>(.imagePlaceholder)
     
-    init(article: ArticleResponse) {
+    init(article: Article) {
         title.value = article.title
-        description.value = article.description
+        description.value = article.articleDescription
     }
 }

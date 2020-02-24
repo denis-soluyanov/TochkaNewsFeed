@@ -23,7 +23,7 @@ final class NewsFeedNetworkManager {
         self.domain = domain
     }
  
-    func fetchNews(with queries: [NewsFeedAPI], completion: @escaping ([ArticleResponse]?) -> Void) {
+    func fetchNews(with queries: [NewsFeedAPI], completion: @escaping (NewsFeedResponse?) -> Void) {
         guard let request = createRequest(with: queries.map{ $0.urlQueryItem }) else {
             completion(nil)
             return
@@ -33,7 +33,7 @@ final class NewsFeedNetworkManager {
             
             do {
                 let newsResponse = try JSONDecoder().decode(NewsFeedResponse.self, from: jsonData)
-                completion(newsResponse.articles)
+                completion(newsResponse)
             } catch {
                 print(error)
                 completion(nil)
@@ -49,9 +49,9 @@ private extension NewsFeedNetworkManager {
             return nil
         }
         components.queryItems = queries
-        components.queryItems?.append(URLQueryItem(name: "apiKey", value: NEWS_FEED_API_KEY))
         
         guard let url = components.url else { return nil }
+        print(url)
         return URLRequest(url: url)
     }
     
