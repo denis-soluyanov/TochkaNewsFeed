@@ -18,7 +18,12 @@ final class NewsFeedCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .red
+        label.textColor = .black
+//        label.lineBreakMode = .byCharWrapping
+        label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.9
+        label.font = .boldSystemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -26,15 +31,24 @@ final class NewsFeedCell: UITableViewCell {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 2
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
-    private lazy var previewImageView: UIImageView = {
-        let imageView = UIImageView()
+    private lazy var previewImageView: WebImageView = {
+        let imageView = WebImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+//        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -43,10 +57,20 @@ final class NewsFeedCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(previewImageView)
+        contentView.addSubview(activityIndicator)
         
         setConstraintsForPreviewImageView(size: CGSize(width: 100, height: 100))
         setConstraintsForTitleLabel()
         setConstraintsForDescriptionLabel()
+        setConstraintsForActivityIndicator()
+        
+        activityIndicator.startAnimating()
+    }
+    
+    override func layoutSubviews() {
+//        if previewImageView.image == nil {
+//            activityIndicator.startAnimating()
+//        }
     }
     
     required init?(coder: NSCoder) {
@@ -79,13 +103,20 @@ private extension NewsFeedCell {
     }
     
     func setConstraintsForDescriptionLabel() {
-        descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10)
+        descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5)
             .isActive = true
         descriptionLabel.leftAnchor.constraint(equalTo: previewImageView.rightAnchor, constant: 10)
             .isActive = true
         descriptionLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10)
             .isActive = true
-        descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10)
+        descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5)
+            .isActive = true
+    }
+    
+    func setConstraintsForActivityIndicator() {
+        activityIndicator.centerXAnchor.constraint(equalTo: previewImageView.centerXAnchor)
+            .isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: previewImageView.centerYAnchor)
             .isActive = true
     }
     
@@ -96,8 +127,9 @@ private extension NewsFeedCell {
         viewModel.description.bind { [weak self] in
             self?.descriptionLabel.text = $0
         }
-        viewModel.image.bind { [weak self] in
-            self?.previewImageView.image = $0
+        viewModel.imageURL.bind { [weak self] in
+            self?.previewImageView.setImage(from: $0)
+            self?.activityIndicator.stopAnimating()
         }
     }
 }

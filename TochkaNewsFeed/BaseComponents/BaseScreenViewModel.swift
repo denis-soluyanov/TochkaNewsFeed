@@ -23,7 +23,7 @@ protocol BaseScreenViewModel: class {
     
     func cellViewModel(at indexPath: IndexPath) -> BaseCellViewModel
     
-    func loadMoreContents()
-    
-    func fetch()
+//    func loadMoreContents()
+
+    func fetchContents(completion: @escaping (_ dataIsAvailable: Bool) -> Void)
 }

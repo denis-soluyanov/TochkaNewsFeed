@@ -12,7 +12,13 @@ final class CoreDataManager {
     
     private lazy var container: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "TochkaNewsFeed")
+        
+        let description = NSPersistentStoreDescription()
+        description.type = NSInMemoryStoreType
+        container.persistentStoreDescriptions = [description]
+        
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            precondition( storeDescription.type == NSInMemoryStoreType )
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
@@ -53,5 +59,26 @@ final class CoreDataManager {
             managedObjectContext: context,
             sectionNameKeyPath: nil,
             cacheName: nil)
+    }
+    
+    func remove<T: NSManagedObject>(object: T) {
+        context.perform {
+            self.context.delete(object)
+        }
+        saveContext()
+    }
+    
+    func removeAll<T: NSManagedObject>(_: T.Type) {
+        let request = NSBatchDeleteRequest(fetchRequest: T.fetchRequest())
+        
+        context.perform {
+            do {
+                print("Deleting all entities from CoreData")
+                try self.context.execute(request)
+            } catch {
+                print(error)
+            }
+        }
+        saveContext()
     }
 }

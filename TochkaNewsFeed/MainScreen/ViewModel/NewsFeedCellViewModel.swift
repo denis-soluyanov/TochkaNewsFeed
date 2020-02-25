@@ -16,10 +16,11 @@ final class NewsFeedCellViewModel: BaseCellViewModel {
     
     let title       = Box<String?>("")
     let description = Box<String?>("")
-    let image       = Box<UIImage?>(.imagePlaceholder)
+    let imageURL    = Box<URL?>(nil)
     
     init(article: Article) {
-        title.value = article.title
+        title.value       = article.title
         description.value = article.articleDescription
+        imageURL.value    = article.urlToImage
     }
 }

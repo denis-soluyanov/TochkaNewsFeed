@@ -33,6 +33,7 @@ class BaseViewController: UIViewController {
         tableView.separatorStyle  = .singleLine
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
+        tableView.isHidden = true
         tableView.register(cellClass, forCellReuseIdentifier: cellReuseId)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -58,6 +59,15 @@ class BaseViewController: UIViewController {
         activityIndicator.startAnimating()
         
         setupNavigationBar()
+        viewModel.fetchContents { dataIsAvailable in
+            DispatchQueue.main.async { [weak self] in
+                print("dataIsAvailable: \(dataIsAvailable)")
+                Thread.sleep(forTimeInterval: 5)
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
+                self?.tableView.reloadData()
+            }
+        }
     }
     
     func setupNavigationBar() {

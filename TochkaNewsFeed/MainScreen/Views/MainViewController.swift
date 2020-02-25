@@ -13,8 +13,6 @@ final class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemTeal
-//        viewModel.loadMoreContents()
-        viewModel.fetch()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -26,13 +24,22 @@ final class MainViewController: BaseViewController {
 
 extension MainViewController {
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let visibleHeight = scrollView.frame.height - scrollView.contentInset.top - scrollView.contentInset.bottom
-//        let y = scrollView.contentOffset.y + scrollView.contentInset.top
-//        let threshold = scrollView.contentSize.height - visibleHeight - 300
-//
-//        if y >= threshold, viewModel.stopPagination {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let visibleHeight = scrollView.frame.height - scrollView.contentInset.top - scrollView.contentInset.bottom
+        print("visible height = \(visibleHeight)")
+        
+        let y = scrollView.contentOffset.y + scrollView.contentInset.top
+        print("y = \(y)")
+        
+        let threshold = scrollView.contentSize.height - visibleHeight - 300
+        print("threshold = \(threshold)")
+        
+        
+        
+        if y >= threshold {
+            print("Load next portion of data")
 //            viewModel.loadMoreContents()
-//        }
-//    }
+        }
+    }
 }

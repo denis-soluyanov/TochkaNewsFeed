@@ -40,11 +40,20 @@ final class MainScreenViewModel: BaseScreenViewModel {
     
     func cellViewModel(at indexPath: IndexPath) -> BaseCellViewModel {
         let object = fetchResultsController.object(at: indexPath)
-        print("getting object from fetchRC")
         return NewsFeedCellViewModel(article: object)
     }
     
-    func loadMoreContents() {
+    func fetchContents(completion: @escaping (_ dataIsAvailable: Bool) -> Void) {
+        if fetchFromCoreData() {
+            print("Loading data from CoreData...")
+            completion(true)
+        } else {
+            print("Loading data from network...")
+            loadMoreContents(completion: completion)
+        }
+    }
+    
+    func loadMoreContents(completion: @escaping (_ dataIsAvailable: Bool) -> Void) {
         stopPagination = true
         
         let queries = [
@@ -56,21 +65,22 @@ final class MainScreenViewModel: BaseScreenViewModel {
         
         NewsFeedNetworkManager.shared.fetchNews(with: queries) {
             [weak self] response in
-            guard let self = self, let response = response else { return }
+            guard let self = self, let response = response else {
+                completion(false)
+                print("some error")
+                return
+            }
             
             self.saveArticlesInCoreData(response.articles)
-            self.page += 1
-//            self.stopPagination = response.totalResults
+            Thread.sleep(forTimeInterval: 2)
+            self.fetchFromCoreData()
+            Thread.sleep(forTimeInterval: 2)
+            completion(true)
+            //            self.page += 1
+            //            self.stopPagination = response.totalResults
         }
     }
     
-    func fetch() {
-        do {
-            try fetchResultsController.performFetch()
-        } catch let error as NSError {
-            print("Fetching error: \(error); \(error.userInfo)")
-        }
-    }
     
     private func saveArticlesInCoreData(_ articlesResponse: [ArticleResponse]) {
         CoreDataManager.shared.save { context in
@@ -84,6 +94,17 @@ final class MainScreenViewModel: BaseScreenViewModel {
             } catch {
                 fatalError("Failure to save context: \(error)")
             }
+        }
+    }
+    
+    
+    private func fetchFromCoreData() -> Bool {
+        do {
+            try fetchResultsController.performFetch()
+            return !(fetchResultsController.fetchedObjects?.isEmpty ?? false)
+        } catch let error as NSError {
+            print("Fetching error: \(error); \(error.userInfo)")
+            return false
         }
     }
 }

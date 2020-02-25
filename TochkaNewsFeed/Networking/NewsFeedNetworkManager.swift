@@ -6,7 +6,7 @@
 //  Copyright © 2020 Denis Soluyanov. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 final class NewsFeedNetworkManager {
     private let session : URLSession
@@ -28,7 +28,7 @@ final class NewsFeedNetworkManager {
             completion(nil)
             return
         }
-        fetch(request: request) { jsonData in
+        fetch(request: request) { jsonData, _ in
             guard let jsonData = jsonData else { return }
             
             do {
@@ -39,6 +39,34 @@ final class NewsFeedNetworkManager {
                 completion(nil)
             }
         }
+    }
+    
+    func fetchImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
+        let request = URLRequest(url: url)
+        
+        if let cachedResponse = URLCache.shared.cachedResponse(for: request) {
+            completion(UIImage(data: cachedResponse.data))
+            print("Loaded from cache")
+            return
+        }
+        
+        fetch(request: request) { [weak self] (data, response) in
+            guard
+                let response = response,
+                let imageData = data else {
+                completion(nil)
+                return
+            }
+            self?.cacheResponse(data: imageData, response: response)
+            print("Loaded from network")
+            completion(UIImage(data: imageData))
+        }
+    }
+    
+    func cacheResponse(data: Data, response: URLResponse) {
+        guard let url = response.url else { return }
+        let cachedResponse = CachedURLResponse(response: response, data: data)
+        URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: url))
     }
 }
 
@@ -55,29 +83,29 @@ private extension NewsFeedNetworkManager {
         return URLRequest(url: url)
     }
     
-    func fetch(request: URLRequest, completion: @escaping (Data?) -> Void) {
+    func fetch(request: URLRequest, completion: @escaping (Data?, URLResponse?) -> Void) {
         session.dataTask(with: request) { (data, response, error) in
             guard let response = response as? HTTPURLResponse else {
                 print("Response doesn't comply to HTTP protocol")
-                completion(nil)
+                completion(nil, nil)
                 return
             }
             guard response.statusCode == 200 else {
                 print("response code: \(response.statusCode)")
-                completion(nil)
+                completion(nil, response)
                 return
             }
             guard error == nil else {
                 print("\(error!.localizedDescription)")
-                completion(nil)
+                completion(nil, response)
                 return
             }
-            guard let jsonData = data else {
+            guard let data = data else {
                 print("No data available in response body")
-                completion(nil)
+                completion(nil, response)
                 return
             }
-            completion(jsonData)
+            completion(data, response)
         }.resume()
     }
 }
