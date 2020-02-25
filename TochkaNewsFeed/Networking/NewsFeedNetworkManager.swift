@@ -46,7 +46,6 @@ final class NewsFeedNetworkManager {
         
         if let cachedResponse = URLCache.shared.cachedResponse(for: request) {
             completion(UIImage(data: cachedResponse.data))
-            print("Loaded from cache")
             return
         }
         
@@ -58,7 +57,6 @@ final class NewsFeedNetworkManager {
                 return
             }
             self?.cacheResponse(data: imageData, response: response)
-            print("Loaded from network")
             completion(UIImage(data: imageData))
         }
     }

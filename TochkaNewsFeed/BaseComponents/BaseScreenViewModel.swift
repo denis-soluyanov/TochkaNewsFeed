@@ -15,15 +15,13 @@ protocol BaseScreenViewModel: class {
     
     var numberOfRows: Int { get }
     
-    var stopPagination: Bool { get set }
+    var isNeedFetchMore: Bool { get }
     
     var delegate: NSFetchedResultsControllerDelegate? { get set }
     
     var cellViewModelClass: BaseCellViewModel.Type { get }
     
     func cellViewModel(at indexPath: IndexPath) -> BaseCellViewModel
-    
-//    func loadMoreContents()
 
     func fetchContents(completion: @escaping (_ dataIsAvailable: Bool) -> Void)
 }

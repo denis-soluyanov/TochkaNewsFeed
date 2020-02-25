@@ -9,7 +9,6 @@
 import UIKit
 
 final class NewsFeedCellViewModel: BaseCellViewModel {
-    
     static let cellClass   : UITableViewCell.Type = NewsFeedCell.self
     static let cellReuseId : String  = "NewsFeedCellReuseId"
     static let cellHeight  : CGFloat = 100.0

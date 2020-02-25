@@ -18,12 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        let viewController = MainViewController(viewModel: MainScreenViewModel())
+        let viewController = NewsFeedController(viewModel: NewsFeedViewModel())
         window?.rootViewController = UINavigationController(rootViewController: viewController)
         return true
-    }
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        CoreDataManager.shared.saveContext()
     }
 }

@@ -10,16 +10,15 @@ import UIKit
 import CoreData
 
 class BaseViewController: UIViewController {
-    let viewModel: BaseScreenViewModel
-    
     private lazy var cellReuseId: String = {
         return viewModel.cellViewModelClass.cellReuseId
     }()
     
-    private lazy var activityIndicator: UIActivityIndicatorView = {
+    let viewModel: BaseScreenViewModel
+    
+    lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
-        indicator.isHidden = false
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
     }()
@@ -32,8 +31,8 @@ class BaseViewController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle  = .singleLine
         tableView.allowsSelection = false
+        tableView.isHidden        = true
         tableView.tableFooterView = UIView()
-        tableView.isHidden = true
         tableView.register(cellClass, forCellReuseIdentifier: cellReuseId)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -59,18 +58,9 @@ class BaseViewController: UIViewController {
         activityIndicator.startAnimating()
         
         setupNavigationBar()
-        viewModel.fetchContents { dataIsAvailable in
-            DispatchQueue.main.async { [weak self] in
-                print("dataIsAvailable: \(dataIsAvailable)")
-                Thread.sleep(forTimeInterval: 5)
-                self?.activityIndicator.stopAnimating()
-                self?.tableView.isHidden = false
-                self?.tableView.reloadData()
-            }
-        }
     }
     
-    func setupNavigationBar() {
+    private func setupNavigationBar() {
         navigationItem.title = viewModel.screenTitle
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -114,5 +104,25 @@ extension BaseViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         print("notification from fetchRC\nreloading tableView...")
         tableView.reloadData()
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+extension BaseViewController {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let diff = contentHeight - scrollView.frame.height
+        
+        if offsetY > diff, viewModel.isNeedFetchMore {
+            viewModel.fetchContents { dataIsAvailable in
+                DispatchQueue.main.async { [weak self] in
+                    Thread.sleep(forTimeInterval: 3)
+                    self?.activityIndicator.stopAnimating()
+                    self?.tableView.isHidden = false
+                    self?.tableView.reloadData()
+                }
+            }
+        }
     }
 }

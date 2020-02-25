@@ -1,5 +1,5 @@
 //
-//  Article+CoreDataClass.swift
+//  Article.swift
 //  TochkaNewsFeed
 //
 //  Created by den on 23.02.2020.

@@ -1,5 +1,5 @@
 //
-//  MainScreenViewModel.swift
+//  NewsFeedViewModel.swift
 //  TochkaNewsFeed
 //
 //  Created by den on 21.02.2020.
@@ -9,20 +9,23 @@
 import UIKit
 import CoreData
 
-final class MainScreenViewModel: BaseScreenViewModel {
+final class NewsFeedViewModel: BaseScreenViewModel {
+    private var page: Int = 1
+    private let pageSize: Int = 20
+    private var isFetchingAvailable: Bool = true
     
     private lazy var fetchResultsController: NSFetchedResultsController<Article> = {
         let request: NSFetchRequest<Article> = Article.fetchRequest()
-        let sort = NSSortDescriptor(key: #keyPath(Article.title), ascending: true)
+        let sort = NSSortDescriptor(key: #keyPath(Article.publishDate), ascending: true)
         request.sortDescriptors = [sort]
         return CoreDataManager.shared.fetchedResultsController(with: request)
     }()
     
-    private var page: Int = 1
-    
     let screenTitle: String = "NewsFeed"
     
-    var stopPagination: Bool = true
+    var isNeedFetchMore: Bool {
+        return isFetchingAvailable
+    }
     
     var numberOfRows: Int {
         return fetchResultsController.fetchedObjects?.count ?? 0
@@ -44,6 +47,10 @@ final class MainScreenViewModel: BaseScreenViewModel {
     }
     
     func fetchContents(completion: @escaping (_ dataIsAvailable: Bool) -> Void) {
+        guard isFetchingAvailable else { return }
+        
+        isFetchingAvailable = false
+        
         if fetchFromCoreData() {
             print("Loading data from CoreData...")
             completion(true)
@@ -53,34 +60,36 @@ final class MainScreenViewModel: BaseScreenViewModel {
         }
     }
     
+    
+    func fetchMock() {
+        print("fetching data...")
+        isFetchingAvailable = false
+        DispatchQueue.global(qos: .utility).async { [weak self] in
+            print("Doing some shit...")
+            Thread.sleep(forTimeInterval: 5)
+            self?.isFetchingAvailable = true
+        }
+    }
+    
     func loadMoreContents(completion: @escaping (_ dataIsAvailable: Bool) -> Void) {
-        stopPagination = true
-        
         let queries = [
             NewsFeedAPI.keyWords(value: "coronavirus"),
             NewsFeedAPI.page(value: page),
-            NewsFeedAPI.pageSize(value: 10),
             NewsFeedAPI.apiKey(value: NEWS_FEED_API_KEY)
         ]
-        
         NewsFeedNetworkManager.shared.fetchNews(with: queries) {
             [weak self] response in
+            
             guard let self = self, let response = response else {
                 completion(false)
                 print("some error")
                 return
             }
-            
             self.saveArticlesInCoreData(response.articles)
-            Thread.sleep(forTimeInterval: 2)
-            self.fetchFromCoreData()
-            Thread.sleep(forTimeInterval: 2)
-            completion(true)
-            //            self.page += 1
-            //            self.stopPagination = response.totalResults
+            self.page += 1
+            self.isFetchingAvailable = (self.page * self.pageSize) <= response.totalResults
         }
     }
-    
     
     private func saveArticlesInCoreData(_ articlesResponse: [ArticleResponse]) {
         CoreDataManager.shared.save { context in
@@ -96,7 +105,6 @@ final class MainScreenViewModel: BaseScreenViewModel {
             }
         }
     }
-    
     
     private func fetchFromCoreData() -> Bool {
         do {

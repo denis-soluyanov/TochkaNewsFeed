@@ -12,11 +12,11 @@ class WebImageView: UIImageView {
     
     func setImage(from url: URL?) {
         guard let imageURL = url else {
-            image = .imagePlaceholder
+            image = UIImage.imagePlaceholder
             return
         }
-        
-        NewsFeedNetworkManager.shared.fetchImage(from: imageURL) { [weak self] imageResponse in
+        NewsFeedNetworkManager.shared.fetchImage(from: imageURL) {
+            [weak self] imageResponse in
             DispatchQueue.main.async {
                 self?.image = imageResponse
             }

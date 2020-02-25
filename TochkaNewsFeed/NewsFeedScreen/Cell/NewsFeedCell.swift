@@ -19,7 +19,6 @@ final class NewsFeedCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-//        label.lineBreakMode = .byCharWrapping
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.9
