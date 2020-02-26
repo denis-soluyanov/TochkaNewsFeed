@@ -29,3 +29,18 @@ struct Source: Decodable {
     let id   : String?
     let name : String
 }
+
+struct NewsFeedErrorResponse: Decodable {
+    let status  : String?
+    let code    : String?
+    let message : String?
+}
+
+extension NewsFeedErrorResponse: CustomDebugStringConvertible {
+    var debugDescription: String {
+        guard let status = status, let code = code, let message = message else {
+              return "Description anavailable"
+        }
+        return "Status: \(status); code: \(code); message: \(message)"
+    }
+}

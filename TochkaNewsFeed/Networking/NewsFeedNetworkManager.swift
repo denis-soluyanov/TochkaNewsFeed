@@ -24,12 +24,18 @@ final class NewsFeedNetworkManager {
     }
  
     func fetchNews(with queries: [NewsFeedAPI], completion: @escaping (NewsFeedResponse?) -> Void) {
-        guard let request = createRequest(with: queries.map{ $0.urlQueryItem }) else {
+        guard let request = URLRequest(domain: domain, queries: queries.map{ $0.urlQueryItem }) else {
             completion(nil)
             return
         }
-        fetch(request: request) { jsonData, _ in
+        fetch(request: request) { jsonData, error in
             guard let jsonData = jsonData else { return }
+            guard error == nil else {
+                if let response = try? JSONDecoder().decode(NewsFeedErrorResponse.self, from: jsonData) {
+                    print(response)
+                }
+                return
+            }
             
             do {
                 let newsResponse = try JSONDecoder().decode(NewsFeedResponse.self, from: jsonData)
@@ -42,68 +48,37 @@ final class NewsFeedNetworkManager {
     }
     
     func fetchImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
-        let request = URLRequest(url: url)
-        
-        if let cachedResponse = URLCache.shared.cachedResponse(for: request) {
-            completion(UIImage(data: cachedResponse.data))
-            return
-        }
-        
-        fetch(request: request) { [weak self] (data, response) in
-            guard
-                let response = response,
-                let imageData = data else {
+        fetch(request: URLRequest(url: url)) { data, _ in
+            guard let imageData = data else {
                 completion(nil)
                 return
             }
-            self?.cacheResponse(data: imageData, response: response)
             completion(UIImage(data: imageData))
         }
-    }
-    
-    func cacheResponse(data: Data, response: URLResponse) {
-        guard let url = response.url else { return }
-        let cachedResponse = CachedURLResponse(response: response, data: data)
-        URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: url))
     }
 }
 
 private extension NewsFeedNetworkManager {
     
-    func createRequest(with queries: [URLQueryItem]) -> URLRequest? {
-        guard var components = URLComponents(string: NEWS_FEED_API_DOMAIN) else {
-            return nil
-        }
-        components.queryItems = queries
-        
-        guard let url = components.url else { return nil }
-        print(url)
-        return URLRequest(url: url)
-    }
-    
-    func fetch(request: URLRequest, completion: @escaping (Data?, URLResponse?) -> Void) {
+    func fetch(request: URLRequest, completion: @escaping (Data?, NetworkError?) -> Void) {
         session.dataTask(with: request) { (data, response, error) in
-            guard let response = response as? HTTPURLResponse else {
-                print("Response doesn't comply to HTTP protocol")
-                completion(nil, nil)
-                return
-            }
-            guard response.statusCode == 200 else {
-                print("response code: \(response.statusCode)")
-                completion(nil, response)
-                return
-            }
             guard error == nil else {
-                print("\(error!.localizedDescription)")
-                completion(nil, response)
+                completion(nil, .requestError(error!))
+                return
+            }
+            guard let response = response as? HTTPURLResponse else {
+                completion(nil, .responseTypeError)
                 return
             }
             guard let data = data else {
-                print("No data available in response body")
-                completion(nil, response)
+                completion(nil, .dataError)
                 return
             }
-            completion(data, response)
+            guard response.statusCode == 200 else {
+                completion(data, .responseCode(response.statusCode))
+                return
+            }
+            completion(data, nil)
         }.resume()
     }
 }
