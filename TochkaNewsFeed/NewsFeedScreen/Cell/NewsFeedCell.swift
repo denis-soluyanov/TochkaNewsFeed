@@ -35,8 +35,8 @@ final class NewsFeedCell: UITableViewCell {
         return label
     }()
     
-    private lazy var previewImageView: UIImageView = {
-        let imageView = UIImageView()
+    private lazy var previewImageView: WebImageView = {
+        let imageView = WebImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,8 +102,8 @@ private extension NewsFeedCell {
         viewModel.description.bind { [weak self] in
             self?.descriptionLabel.text = $0
         }
-//        viewModel.image.bind { [weak self] in
-//            self?.previewImageView.image = $0
-//        }
+        viewModel.imageURL.bind { [weak self] in
+            self?.previewImageView.setImage(from: $0)
+        }
     }
 }
