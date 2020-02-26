@@ -21,7 +21,7 @@ public class Article: NSManagedObject, Populatable {
     func populateFrom(object: T) {
         title = object.title
         articleDescription = object.description
-        urlToImage = URL(string: object.urlToImage)
+        urlToImage = URL(string: object.urlToImage ?? "")
         publishDate = ISO8601DateFormatter().date(from: object.publishedAt)
     }
 }

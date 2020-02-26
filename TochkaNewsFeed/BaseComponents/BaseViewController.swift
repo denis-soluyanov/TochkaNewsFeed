@@ -46,7 +46,6 @@ class BaseViewController: UIViewController {
                 self?.tableView.reloadData()
             }
         }
-        self.viewModel.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -101,14 +100,6 @@ extension BaseViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return viewModel.cellViewModelClass.cellHeight
-    }
-}
-
-// MARK: - NSFetchedResultsControllerDelegate
-extension BaseViewController: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        print("notification from fetchRC\nreloading tableView...")
-        tableView.reloadData()
     }
 }
 

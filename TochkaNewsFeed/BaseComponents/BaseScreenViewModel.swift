@@ -19,8 +19,6 @@ protocol BaseScreenViewModel: class {
     
     var isDataAvailable: Box<Bool> { get }
     
-    var delegate: NSFetchedResultsControllerDelegate? { get set }
-    
     var cellViewModelClass: BaseCellViewModel.Type { get }
     
     func cellViewModel(at indexPath: IndexPath) -> BaseCellViewModel

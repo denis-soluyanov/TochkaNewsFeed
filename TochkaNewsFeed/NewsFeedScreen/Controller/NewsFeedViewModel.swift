@@ -16,7 +16,7 @@ final class NewsFeedViewModel: BaseScreenViewModel {
     
     private lazy var fetchResultsController: NSFetchedResultsController<Article> = {
         let request: NSFetchRequest<Article> = Article.fetchRequest()
-        let sort = NSSortDescriptor(key: #keyPath(Article.publishDate), ascending: true)
+        let sort = NSSortDescriptor(key: #keyPath(Article.publishDate), ascending: false)
         request.sortDescriptors = [sort]
         return CoreDataManager.shared.fetchedResultsController(with: request)
     }()
@@ -49,14 +49,9 @@ final class NewsFeedViewModel: BaseScreenViewModel {
     }
     
     func fetchContents() {
-        guard isFetchingAvailable else {
-            print("Fetching is anavailable now")
-            return
-        }
+        guard isFetchingAvailable else { return }
         
         isFetchingAvailable = false
-        
-        print("Loading data from network...")
         fetchFromNetwork()
     }
     
@@ -65,16 +60,16 @@ final class NewsFeedViewModel: BaseScreenViewModel {
             NewsFeedAPI.keyWords(value: "coronavirus"),
             NewsFeedAPI.page(value: page),
             NewsFeedAPI.pageSize(value: pageSize),
+            NewsFeedAPI.sortBy(value: .publishedAt),
+            NewsFeedAPI.language(value: .russian),
             NewsFeedAPI.apiKey(value: NEWS_FEED_API_KEY)
         ]
         NewsFeedNetworkManager.shared.fetchNews(with: queries) { [weak self] response in
             guard let response = response else { return }
             
             self?.saveAsyncInCoreData(response.articles) {
-                print("Loading data from CoreData...")
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self, self.fetchFromCoreData() else {
-                        print("No data available in CoreData")
                         return
                     }
                     self.page += 1
