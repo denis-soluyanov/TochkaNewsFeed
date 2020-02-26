@@ -17,11 +17,13 @@ protocol BaseScreenViewModel: class {
     
     var isNeedFetchMore: Bool { get }
     
+    var isDataAvailable: Box<Bool> { get }
+    
     var delegate: NSFetchedResultsControllerDelegate? { get set }
     
     var cellViewModelClass: BaseCellViewModel.Type { get }
     
     func cellViewModel(at indexPath: IndexPath) -> BaseCellViewModel
 
-    func fetchContents(completion: @escaping (_ dataIsAvailable: Bool) -> Void)
+    func fetchContents()
 }

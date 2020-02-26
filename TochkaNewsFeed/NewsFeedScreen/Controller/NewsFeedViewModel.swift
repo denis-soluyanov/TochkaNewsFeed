@@ -11,7 +11,7 @@ import CoreData
 
 final class NewsFeedViewModel: BaseScreenViewModel {
     private var page: Int = 1
-    private let pageSize: Int = 20
+    private let pageSize: Int = 10
     private var isFetchingAvailable: Bool = true
     
     private lazy var fetchResultsController: NSFetchedResultsController<Article> = {
@@ -26,6 +26,8 @@ final class NewsFeedViewModel: BaseScreenViewModel {
     var isNeedFetchMore: Bool {
         return isFetchingAvailable
     }
+    
+    let isDataAvailable = Box<Bool>(false)
     
     var numberOfRows: Int {
         return fetchResultsController.fetchedObjects?.count ?? 0
@@ -46,60 +48,51 @@ final class NewsFeedViewModel: BaseScreenViewModel {
         return NewsFeedCellViewModel(article: object)
     }
     
-    func fetchContents(completion: @escaping (_ dataIsAvailable: Bool) -> Void) {
-        guard isFetchingAvailable else { return }
+    func fetchContents() {
+        guard isFetchingAvailable else {
+            print("Fetching is anavailable now")
+            return
+        }
         
         isFetchingAvailable = false
         
-        if fetchFromCoreData() {
-            print("Loading data from CoreData...")
-            completion(true)
-        } else {
-            print("Loading data from network...")
-            loadMoreContents(completion: completion)
-        }
+        print("Loading data from network...")
+        fetchFromNetwork()
     }
     
-    
-    func fetchMock() {
-        print("fetching data...")
-        isFetchingAvailable = false
-        DispatchQueue.global(qos: .utility).async { [weak self] in
-            print("Doing some shit...")
-            Thread.sleep(forTimeInterval: 5)
-            self?.isFetchingAvailable = true
-        }
-    }
-    
-    func loadMoreContents(completion: @escaping (_ dataIsAvailable: Bool) -> Void) {
+    private func fetchFromNetwork() {
         let queries = [
             NewsFeedAPI.keyWords(value: "coronavirus"),
             NewsFeedAPI.page(value: page),
+            NewsFeedAPI.pageSize(value: pageSize),
             NewsFeedAPI.apiKey(value: NEWS_FEED_API_KEY)
         ]
-        NewsFeedNetworkManager.shared.fetchNews(with: queries) {
-            [weak self] response in
+        NewsFeedNetworkManager.shared.fetchNews(with: queries) { [weak self] response in
+            guard let response = response else { return }
             
-            guard let self = self, let response = response else {
-                completion(false)
-                print("some error")
-                return
+            self?.saveAsyncInCoreData(response.articles) {
+                print("Loading data from CoreData...")
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self, self.fetchFromCoreData() else {
+                        print("No data available in CoreData")
+                        return
+                    }
+                    self.page += 1
+                    self.isDataAvailable.value = true
+                    self.isFetchingAvailable = (self.page * self.pageSize) <= response.totalResults
+                }
             }
-            self.saveArticlesInCoreData(response.articles)
-            self.page += 1
-            self.isFetchingAvailable = (self.page * self.pageSize) <= response.totalResults
         }
     }
     
-    private func saveArticlesInCoreData(_ articlesResponse: [ArticleResponse]) {
+    private func saveAsyncInCoreData(_ response: [ArticleResponse], completion: @escaping () -> Void) {
         CoreDataManager.shared.save { context in
-            
-            for articleResponse in articlesResponse {
+            for articleResponse in response {
                 _ = Article(populateFrom: articleResponse, context: context)
             }
-            
             do {
                 try context.save()
+                completion()
             } catch {
                 fatalError("Failure to save context: \(error)")
             }

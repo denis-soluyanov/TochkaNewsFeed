@@ -31,7 +31,6 @@ class BaseViewController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle  = .singleLine
         tableView.allowsSelection = false
-        tableView.isHidden        = true
         tableView.tableFooterView = UIView()
         tableView.register(cellClass, forCellReuseIdentifier: cellReuseId)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -41,6 +40,12 @@ class BaseViewController: UIViewController {
     init(viewModel: BaseScreenViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        self.viewModel.isDataAvailable.bind { [weak self] isDataAvailable in
+            guard isDataAvailable else { return }
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
         self.viewModel.delegate = self
     }
     
@@ -55,7 +60,7 @@ class BaseViewController: UIViewController {
         
         view.addSubview(activityIndicator)
         setConstraintsForActivityIndicator()
-        activityIndicator.startAnimating()
+//        activityIndicator.startAnimating()
         
         setupNavigationBar()
     }
@@ -115,14 +120,7 @@ extension BaseViewController {
         let diff = contentHeight - scrollView.frame.height
         
         if offsetY > diff, viewModel.isNeedFetchMore {
-            viewModel.fetchContents { dataIsAvailable in
-                DispatchQueue.main.async { [weak self] in
-                    Thread.sleep(forTimeInterval: 3)
-                    self?.activityIndicator.stopAnimating()
-                    self?.tableView.isHidden = false
-                    self?.tableView.reloadData()
-                }
-            }
+            viewModel.fetchContents()
         }
     }
 }

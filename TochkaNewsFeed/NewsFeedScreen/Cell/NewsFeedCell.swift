@@ -35,19 +35,12 @@ final class NewsFeedCell: UITableViewCell {
         return label
     }()
     
-    private lazy var previewImageView: WebImageView = {
-        let imageView = WebImageView()
+    private lazy var previewImageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
-    }()
-    
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView()
-//        indicator.hidesWhenStopped = true
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        return indicator
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -56,20 +49,10 @@ final class NewsFeedCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(previewImageView)
-        contentView.addSubview(activityIndicator)
         
         setConstraintsForPreviewImageView(size: CGSize(width: 100, height: 100))
         setConstraintsForTitleLabel()
         setConstraintsForDescriptionLabel()
-        setConstraintsForActivityIndicator()
-        
-        activityIndicator.startAnimating()
-    }
-    
-    override func layoutSubviews() {
-//        if previewImageView.image == nil {
-//            activityIndicator.startAnimating()
-//        }
     }
     
     required init?(coder: NSCoder) {
@@ -112,13 +95,6 @@ private extension NewsFeedCell {
             .isActive = true
     }
     
-    func setConstraintsForActivityIndicator() {
-        activityIndicator.centerXAnchor.constraint(equalTo: previewImageView.centerXAnchor)
-            .isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: previewImageView.centerYAnchor)
-            .isActive = true
-    }
-    
     func bindViewModel() {
         viewModel.title.bind { [weak self] in
             self?.titleLabel.text = $0
@@ -126,9 +102,8 @@ private extension NewsFeedCell {
         viewModel.description.bind { [weak self] in
             self?.descriptionLabel.text = $0
         }
-        viewModel.imageURL.bind { [weak self] in
-            self?.previewImageView.setImage(from: $0)
-            self?.activityIndicator.stopAnimating()
-        }
+//        viewModel.image.bind { [weak self] in
+//            self?.previewImageView.image = $0
+//        }
     }
 }
