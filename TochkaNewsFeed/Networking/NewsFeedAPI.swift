@@ -8,7 +8,7 @@
 
 import Foundation
 
-let NEWS_FEED_API_DOMAIN = "http://newsapi.org/v2/everything"
+let NEWS_FEED_API_DOMAIN = "https://newsapi.org/v2/everything"
 let NEWS_FEED_API_KEY    = "514f8855936b461ba9f58ed2fe6c16a1"
 
 enum NewsFeedAPI {
