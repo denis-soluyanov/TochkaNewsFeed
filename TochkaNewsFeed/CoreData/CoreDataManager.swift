@@ -18,7 +18,6 @@ final class CoreDataManager {
         container.persistentStoreDescriptions = [description]
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            precondition( storeDescription.type == NSInMemoryStoreType )
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
