@@ -16,6 +16,13 @@ final class NewsFeedCell: UITableViewCell {
         }
     }
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.color = .white
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -39,6 +46,7 @@ final class NewsFeedCell: UITableViewCell {
         let imageView = WebImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.backgroundColor = .lightGray
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -49,10 +57,12 @@ final class NewsFeedCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(previewImageView)
+        contentView.addSubview(activityIndicator)
         
         setConstraintsForPreviewImageView(size: CGSize(width: 100, height: 100))
         setConstraintsForTitleLabel()
         setConstraintsForDescriptionLabel()
+        setConstraintsForActivityIndicator()
     }
     
     required init?(coder: NSCoder) {
@@ -74,13 +84,13 @@ private extension NewsFeedCell {
     }
     
     func setConstraintsForTitleLabel() {
-        titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)
+        titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5)
             .isActive = true
         titleLabel.leftAnchor.constraint(equalTo: previewImageView.rightAnchor, constant: 10)
             .isActive = true
         titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10)
             .isActive = true
-        titleLabel.heightAnchor.constraint(equalToConstant: 30)
+        titleLabel.heightAnchor.constraint(equalToConstant: 20)
             .isActive = true
     }
     
@@ -95,15 +105,26 @@ private extension NewsFeedCell {
             .isActive = true
     }
     
+    func setConstraintsForActivityIndicator() {
+        activityIndicator.centerYAnchor.constraint(equalTo: previewImageView.centerYAnchor)
+            .isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: previewImageView.centerXAnchor)
+            .isActive = true
+    }
+    
     func bindViewModel() {
-        viewModel.title.bind { [weak self] in
-            self?.titleLabel.text = $0
+        viewModel.title.bind { [unowned self] in
+            self.titleLabel.text = $0
         }
-        viewModel.description.bind { [weak self] in
-            self?.descriptionLabel.text = $0
+        viewModel.description.bind { [unowned self] in
+            self.descriptionLabel.text = $0
         }
-        viewModel.imageURL.bind { [weak self] in
-            self?.previewImageView.setImage(from: $0)
+        viewModel.isImageLoaded.bind { [unowned self] in
+            $0 ? self.activityIndicator.stopAnimating()
+               : self.activityIndicator.startAnimating()
+        }
+        viewModel.imageURL.bind { [unowned self] in
+            self.previewImageView.setImage(from: $0)
         }
     }
 }
