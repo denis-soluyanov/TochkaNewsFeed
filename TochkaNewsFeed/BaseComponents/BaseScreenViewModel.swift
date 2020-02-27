@@ -6,8 +6,7 @@
 //  Copyright © 2020 Denis Soluyanov. All rights reserved.
 //
 
-import UIKit
-import CoreData
+import Foundation
 
 protocol BaseScreenViewModel: class {
     
