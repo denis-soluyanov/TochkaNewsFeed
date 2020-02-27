@@ -33,12 +33,6 @@ final class NewsFeedViewModel: BaseScreenViewModel {
         return fetchResultsController.fetchedObjects?.count ?? 0
     }
     
-    weak var delegate: NSFetchedResultsControllerDelegate? {
-        willSet {
-            fetchResultsController.delegate = newValue
-        }
-    }
-    
     var cellViewModelClass: BaseCellViewModel.Type {
         return NewsFeedCellViewModel.self
     }
@@ -61,7 +55,7 @@ final class NewsFeedViewModel: BaseScreenViewModel {
             NewsFeedAPI.page(value: page),
             NewsFeedAPI.pageSize(value: pageSize),
             NewsFeedAPI.sortBy(value: .publishedAt),
-            NewsFeedAPI.language(value: .russian),
+            NewsFeedAPI.language(value: .english),
             NewsFeedAPI.apiKey(value: NEWS_FEED_API_KEY)
         ]
         NewsFeedNetworkManager.shared.fetchNews(with: queries) { [weak self] response in
