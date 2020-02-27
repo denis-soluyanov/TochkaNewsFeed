@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 class BaseViewController: UIViewController {
     private lazy var cellReuseId: String = {
@@ -40,9 +39,11 @@ class BaseViewController: UIViewController {
     init(viewModel: BaseScreenViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
         self.viewModel.isDataAvailable.bind { [weak self] isDataAvailable in
             guard isDataAvailable else { return }
             DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
                 self?.tableView.reloadData()
             }
         }
@@ -55,13 +56,12 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
-        setConstraintsForTableView()
-        
         view.addSubview(activityIndicator)
-        setConstraintsForActivityIndicator()
-//        activityIndicator.startAnimating()
         
+        setConstraintsForTableView()
+        setConstraintsForActivityIndicator()
         setupNavigationBar()
+        activityIndicator.startAnimating()
     }
     
     private func setupNavigationBar() {
