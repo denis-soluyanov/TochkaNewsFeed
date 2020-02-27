@@ -29,6 +29,7 @@
 		B7AD551B24007140008135D2 /* NewsFeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AD551A24007140008135D2 /* NewsFeedResponse.swift */; };
 		B7AD551F24010413008135D2 /* NewsFeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AD551E24010413008135D2 /* NewsFeedAPI.swift */; };
 		B7D8969124013F6C00772615 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D8969024013F6C00772615 /* Box.swift */; };
+		B7F4B7C224071EEA00ABCA90 /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F4B7C124071EEA00ABCA90 /* FileManagerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		B7AD551A24007140008135D2 /* NewsFeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedResponse.swift; sourceTree = "<group>"; };
 		B7AD551E24010413008135D2 /* NewsFeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedAPI.swift; sourceTree = "<group>"; };
 		B7D8969024013F6C00772615 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
+		B7F4B7C124071EEA00ABCA90 /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 				B74324FE2401C90E00F0C21F /* UIImageExtension.swift */,
 				B743250F24056BEB00F0C21F /* WebImageView.swift */,
 				B71AF6752406A4750056C0B3 /* URLRequestExtension.swift */,
+				B7F4B7C124071EEA00ABCA90 /* FileManagerExtension.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				B7AD551724003E99008135D2 /* NewsFeedNetworkManager.swift in Sources */,
 				B7D8969124013F6C00772615 /* Box.swift in Sources */,
 				B73051FF23FFF55200CD77A7 /* TochkaNewsFeed.xcdatamodeld in Sources */,
+				B7F4B7C224071EEA00ABCA90 /* FileManagerExtension.swift in Sources */,
 				B74E780B24000ACC00891ACD /* BaseScreenViewModel.swift in Sources */,
 				B7432507240302B300F0C21F /* Article.swift in Sources */,
 				B74324FF2401C90E00F0C21F /* UIImageExtension.swift in Sources */,

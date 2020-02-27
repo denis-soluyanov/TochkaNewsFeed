@@ -13,9 +13,10 @@ final class NewsFeedCellViewModel: BaseCellViewModel {
     static let cellReuseId : String  = "NewsFeedCellReuseId"
     static let cellHeight  : CGFloat = 100.0
     
-    let title       = Box<String?>("")
-    let description = Box<String?>("")
-    let imageURL    = Box<URL?>(nil)
+    let title         = Box<String?>("")
+    let description   = Box<String?>("")
+    let imageURL      = Box<URL?>(nil)
+    var isImageLoaded = Box<Bool>(false)
     
     init(article: Article) {
         title.value       = article.title

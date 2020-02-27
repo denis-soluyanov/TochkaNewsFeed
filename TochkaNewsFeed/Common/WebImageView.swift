@@ -8,18 +8,37 @@
 
 import UIKit
 
-class WebImageView: UIImageView {
+final class WebImageView: UIImageView {
+    private var currentImageURL: URL?
     
     func setImage(from url: URL?) {
         guard let imageURL = url else {
-            image = UIImage.imagePlaceholder
+            self.image = .imagePlaceholder
             return
         }
-        NewsFeedNetworkManager.shared.fetchImage(from: imageURL) {
-            [weak self] imageResponse in
+        
+        currentImageURL = imageURL
+        self.image = nil
+        
+        if let cachedImage = FileManager.getImageFromCache(filename: imageURL.lastPathComponent) {
+            self.image = cachedImage
+            return
+        }
+ 
+        NewsFeedNetworkManager.shared.fetchImage(from: imageURL) { [weak self] imageResponse in
             DispatchQueue.main.async {
-                self?.image = imageResponse
+                guard let image = imageResponse else {
+                    self?.image = .imagePlaceholder
+                    return
+                }
+                if self?.currentImageURL == imageURL {
+                    self?.image = image
+                }
+                FileManager.saveInCache(image: image, filename: imageURL.lastPathComponent)
             }
         }
     }
+    
+    
+    
 }
