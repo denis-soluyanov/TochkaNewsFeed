@@ -9,9 +9,9 @@
 import UIKit
 import CoreData
 
-final class NewsFeedViewModel: BaseScreenViewModel {
+final class NewsFeedViewModel: BaseViewModel {
     private var page: Int = 1
-    private let pageSize: Int = 10
+    private let pageSize: Int = 20
     private var isFetchingAvailable: Bool = true
     
     private lazy var fetchResultsController: NSFetchedResultsController<Article> = {

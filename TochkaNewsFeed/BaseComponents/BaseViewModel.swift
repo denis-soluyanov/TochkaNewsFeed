@@ -1,5 +1,5 @@
 //
-//  BaseScreenViewModel.swift
+//  BaseViewModel.swift
 //  TochkaNewsFeed
 //
 //  Created by den on 21.02.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol BaseScreenViewModel: class {
+protocol BaseViewModel: class {
     
     var screenTitle: String { get }
     

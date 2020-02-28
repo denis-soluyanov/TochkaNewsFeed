@@ -10,21 +10,17 @@ import UIKit
 
 final class NewsFeedNetworkManager {
     private let session : URLSession
-    private let apiKey  : String
-    private let domain  : String
     
     static let shared: NewsFeedNetworkManager = {
-        return NewsFeedNetworkManager(apiKey: APIKey, domain: APIEndpoint)
+        return NewsFeedNetworkManager()
     }()
     
-    private init(apiKey: String, domain: String) {
-        session = URLSession(configuration: URLSessionConfiguration.default)
-        self.apiKey = apiKey
-        self.domain = domain
+    private init() {
+        session = URLSession(configuration: URLSessionConfiguration.ephemeral)
     }
  
     func fetchNews(with queries: [NewsFeedAPI], completion: @escaping (NewsFeedResponse?) -> Void) {
-        guard let request = URLRequest(domain: domain, queries: queries.map{ $0.urlQueryItem }) else {
+        guard let request = URLRequest(domain: APIEndpoint, queries: queries.map{ $0.urlQueryItem }) else {
             completion(nil)
             return
         }
@@ -56,11 +52,8 @@ final class NewsFeedNetworkManager {
             completion(UIImage(data: imageData))
         }
     }
-}
-
-private extension NewsFeedNetworkManager {
     
-    func fetch(request: URLRequest, completion: @escaping (Data?, NetworkError?) -> Void) {
+    private func fetch(request: URLRequest, completion: @escaping (Data?, NetworkError?) -> Void) {
         session.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
                 completion(nil, .requestError(error!))

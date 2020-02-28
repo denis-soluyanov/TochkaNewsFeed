@@ -11,7 +11,10 @@ import UIKit
 final class WebImageView: UIImageView {
     private var currentImageURL: URL?
     
+    let isImageLoaded = Box<Bool>(false)
+    
     func setImage(from url: URL?) {
+        isImageLoaded.value = false
         currentImageURL = url
         self.image = nil
         
@@ -19,6 +22,7 @@ final class WebImageView: UIImageView {
             DispatchQueue.main.async {
                 guard self?.currentImageURL == url else { return }
                 self?.image = imageResponse
+                self?.isImageLoaded.value = true
             }
         }
     }

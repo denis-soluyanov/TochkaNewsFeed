@@ -21,7 +21,6 @@ extension FileManager {
         DispatchQueue.global(qos: .utility).async {
             guard let data = image.jpegData(compressionQuality: 0.7) else { return }
             let path = getURLInCacheDirectory(for: filename).path
-            
             `default`.createFile(atPath: path, contents: data)
         }
     }

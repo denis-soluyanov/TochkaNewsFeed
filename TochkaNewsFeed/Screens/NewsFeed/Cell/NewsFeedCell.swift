@@ -119,7 +119,7 @@ private extension NewsFeedCell {
         viewModel.description.bind { [unowned self] in
             self.descriptionLabel.text = $0
         }
-        viewModel.isImageLoaded.bind { [unowned self] in
+        previewImageView.isImageLoaded.bind { [unowned self] in
             $0 ? self.activityIndicator.stopAnimating()
                : self.activityIndicator.startAnimating()
         }

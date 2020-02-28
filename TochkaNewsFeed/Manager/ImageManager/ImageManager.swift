@@ -9,7 +9,6 @@
 import UIKit
 
 final class ImageManager {
-    
     private init() {}
     
     static let shared: ImageManager = {
@@ -22,12 +21,14 @@ final class ImageManager {
             return
         }
         guard !imageURL.isFileURL else {
-            completion(UIImage(contentsOfFile: imageURL.path))
+//            completion(UIImage(contentsOfFile: imageURL.path))
             return
         }
         if let cachedImage = FileManager.getImageFromCache(filename: imageURL.lastPathComponent) {
             completion(cachedImage)
+            return
         }
+        
         NewsFeedNetworkManager.shared.fetchImage(from: imageURL) { imageResponse in
             guard let image = imageResponse else {
                 completion(.imagePlaceholder)

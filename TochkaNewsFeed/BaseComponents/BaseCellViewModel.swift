@@ -9,9 +9,7 @@
 import UIKit
 
 protocol BaseCellViewModel: class {
-    
     static var cellClass   : UITableViewCell.Type { get }
-    static var cellReuseId : String  { get }
     static var cellHeight  : CGFloat { get }
     
     var title       : Box<String?> { get }

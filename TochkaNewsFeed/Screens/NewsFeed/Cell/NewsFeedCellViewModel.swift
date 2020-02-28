@@ -9,9 +9,8 @@
 import UIKit
 
 final class NewsFeedCellViewModel: BaseCellViewModel {
-    static let cellClass   : UITableViewCell.Type = NewsFeedCell.self
-    static let cellReuseId : String  = "NewsFeedCellReuseId"
-    static let cellHeight  : CGFloat = 100.0
+    static let cellClass  : UITableViewCell.Type = NewsFeedCell.self
+    static let cellHeight : CGFloat = 100.0
     
     let title         = Box<String?>("")
     let description   = Box<String?>("")

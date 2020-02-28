@@ -9,7 +9,6 @@
 import Foundation
 
 extension URLRequest {
-    
     init?(domain: String, queries: [URLQueryItem]?) {
         guard var components = URLComponents(string: domain) else { return nil }
         
