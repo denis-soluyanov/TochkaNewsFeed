@@ -9,7 +9,7 @@
 import CoreData
 
 protocol Populatable: NSManagedObject {
-    associatedtype T
+    associatedtype TSource
     
-    func populateFrom(object: T)
+    func populateFrom(object: TSource)
 }

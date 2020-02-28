@@ -12,33 +12,14 @@ final class WebImageView: UIImageView {
     private var currentImageURL: URL?
     
     func setImage(from url: URL?) {
-        guard let imageURL = url else {
-            self.image = .imagePlaceholder
-            return
-        }
-        
-        currentImageURL = imageURL
+        currentImageURL = url
         self.image = nil
         
-        if let cachedImage = FileManager.getImageFromCache(filename: imageURL.lastPathComponent) {
-            self.image = cachedImage
-            return
-        }
- 
-        NewsFeedNetworkManager.shared.fetchImage(from: imageURL) { [weak self] imageResponse in
+        ImageManager.shared.getImage(from: url) { [weak self] imageResponse in
             DispatchQueue.main.async {
-                guard let image = imageResponse else {
-                    self?.image = .imagePlaceholder
-                    return
-                }
-                if self?.currentImageURL == imageURL {
-                    self?.image = image
-                }
-                FileManager.saveInCache(image: image, filename: imageURL.lastPathComponent)
+                guard self?.currentImageURL == url else { return }
+                self?.image = imageResponse
             }
         }
     }
-    
-    
-    
 }

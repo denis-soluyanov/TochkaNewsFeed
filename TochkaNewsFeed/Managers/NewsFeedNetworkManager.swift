@@ -14,7 +14,7 @@ final class NewsFeedNetworkManager {
     private let domain  : String
     
     static let shared: NewsFeedNetworkManager = {
-        return NewsFeedNetworkManager(apiKey: NEWS_FEED_API_KEY, domain: NEWS_FEED_API_DOMAIN)
+        return NewsFeedNetworkManager(apiKey: APIKey, domain: APIEndpoint)
     }()
     
     private init(apiKey: String, domain: String) {

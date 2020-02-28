@@ -14,7 +14,7 @@ final class CoreDataManager {
         let container = NSPersistentContainer(name: "TochkaNewsFeed")
         let description = NSPersistentStoreDescription()
         
-        description.type = NSInMemoryStoreType
+        description.type = PersistenStoreType
         container.persistentStoreDescriptions = [description]
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -35,7 +35,7 @@ final class CoreDataManager {
         return CoreDataManager()
     }()
     
-    func saveContext () {
+    func saveViewContext() {
         context.perform {
             if self.context.hasChanges {
                 do {
@@ -48,8 +48,19 @@ final class CoreDataManager {
         }
     }
     
-    func save(_ block: @escaping (NSManagedObjectContext) -> Void) {
-        container.performBackgroundTask(block)
+    func saveAsync<T: Populatable>(_ type: T.Type, populateFrom objects: [T.TSource], completion: (() -> Void)? = nil) {
+        container.performBackgroundTask { privateContext in
+            for object in objects {
+                let entity = type.init(context: privateContext)
+                entity.populateFrom(object: object)
+            }
+            do {
+                try privateContext.save()
+                completion?()
+            } catch {
+                fatalError("Failure to save context: \(error)")
+            }
+        }
     }
     
     func fetchedResultsController<T: NSManagedObject>(with request: NSFetchRequest<T>) -> NSFetchedResultsController<T> {

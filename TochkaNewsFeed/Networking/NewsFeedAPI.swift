@@ -8,29 +8,26 @@
 
 import Foundation
 
-let NEWS_FEED_API_DOMAIN = "https://newsapi.org/v2/everything"
-let NEWS_FEED_API_KEY    = "514f8855936b461ba9f58ed2fe6c16a1"
-
 enum NewsFeedAPI {
-    /* Keywords or phrases to search for in the article title and body */
+    /// Keywords or phrases to search for in the article title and body
     case keyWords(value: String)
     
-    /* Keywords or phrases to search for in the article title only */
+    /// Keywords or phrases to search for in the article title only
     case keyWordsInTitle(value: String)
     
-    /* The 2-letter ISO-639-1 code of the language you want to get headlines for */
+    /// The 2-letter ISO-639-1 code of the language you want to get headlines for
     case language(value: NewsLanguage)
     
-    /* The order to sort the articles in */
+    /// The order to sort the articles in
     case sortBy(value: SortOrder)
     
-    /* The number of results to return per page */
+    /// The number of results to return per page
     case pageSize(value: Int)
     
-    /* Use this to page through the results */
+    /// Use this to page through the results
     case page(value: Int)
     
-    /* Key for access to API */
+    /// Key for access to API
     case apiKey(value: String)
 }
 

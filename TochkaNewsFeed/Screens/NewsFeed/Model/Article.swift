@@ -11,14 +11,14 @@ import CoreData
 
 @objc(Article)
 public class Article: NSManagedObject, Populatable {
-    typealias T = ArticleResponse
+    typealias TSource = ArticleResponse
     
-    convenience init(populateFrom object: T, context: NSManagedObjectContext) {
+    convenience init(populateFrom object: TSource, context: NSManagedObjectContext) {
         self.init(context: context)
         populateFrom(object: object)
     }
     
-    func populateFrom(object: T) {
+    func populateFrom(object: TSource) {
         title = object.title
         articleDescription = object.description
         urlToImage = URL(string: object.urlToImage ?? "")

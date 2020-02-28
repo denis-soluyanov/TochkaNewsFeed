@@ -56,7 +56,7 @@ final class NewsFeedViewModel: BaseScreenViewModel {
             NewsFeedAPI.pageSize(value: pageSize),
             NewsFeedAPI.sortBy(value: .publishedAt),
             NewsFeedAPI.language(value: .english),
-            NewsFeedAPI.apiKey(value: NEWS_FEED_API_KEY)
+            NewsFeedAPI.apiKey(value: APIKey)
         ]
         NewsFeedNetworkManager.shared.fetchNews(with: queries) { [weak self] response in
             guard let response = response else { return }
@@ -75,17 +75,7 @@ final class NewsFeedViewModel: BaseScreenViewModel {
     }
     
     private func saveAsyncInCoreData(_ response: [ArticleResponse], completion: @escaping () -> Void) {
-        CoreDataManager.shared.save { context in
-            for articleResponse in response {
-                _ = Article(populateFrom: articleResponse, context: context)
-            }
-            do {
-                try context.save()
-                completion()
-            } catch {
-                fatalError("Failure to save context: \(error)")
-            }
-        }
+        CoreDataManager.shared.saveAsync(Article.self, populateFrom: response, completion: completion)
     }
     
     private func fetchFromCoreData() -> Bool {
