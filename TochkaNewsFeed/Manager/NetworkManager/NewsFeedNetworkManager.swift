@@ -9,7 +9,7 @@
 import UIKit
 
 final class NewsFeedNetworkManager {
-    private let session : URLSession
+    private let session: URLSession
     
     static let shared: NewsFeedNetworkManager = {
         return NewsFeedNetworkManager()
@@ -43,8 +43,8 @@ final class NewsFeedNetworkManager {
     }
     
     func fetchImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
-        fetch(request: URLRequest(url: url)) { data, _ in
-            guard let imageData = data else {
+        fetch(request: URLRequest(url: url)) { data, error in
+            guard error == nil, let imageData = data else {
                 completion(nil)
                 return
             }
@@ -70,7 +70,6 @@ final class NewsFeedNetworkManager {
                 completion(data, .responseCode(response.statusCode))
                 return
             }
-            CoreDataManager.shared.saveViewContext()
             completion(data, nil)
         }.resume()
     }

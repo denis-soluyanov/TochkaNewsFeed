@@ -14,7 +14,7 @@ final class CoreDataManager {
         let container = NSPersistentContainer(name: "TochkaNewsFeed")
         let description = NSPersistentStoreDescription()
         
-        description.type = PersistenStoreType
+        description.type = CoreDataStoreType
         container.persistentStoreDescriptions = [description]
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -52,7 +52,7 @@ final class CoreDataManager {
         container.performBackgroundTask { privateContext in
             for object in objects {
                 let entity = type.init(context: privateContext)
-                entity.populateFrom(object: object)
+                entity.populate(from: object)
             }
             do {
                 try privateContext.save()

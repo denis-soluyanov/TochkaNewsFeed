@@ -11,5 +11,5 @@ import CoreData
 protocol Populatable: NSManagedObject {
     associatedtype TSource
     
-    func populateFrom(object: TSource)
+    func populate(from object: TSource)
 }

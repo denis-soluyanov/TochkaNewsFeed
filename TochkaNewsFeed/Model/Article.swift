@@ -15,10 +15,10 @@ public class Article: NSManagedObject, Populatable {
     
     convenience init(populateFrom object: TSource, context: NSManagedObjectContext) {
         self.init(context: context)
-        populateFrom(object: object)
+        populate(from: object)
     }
     
-    func populateFrom(object: TSource) {
+    func populate(from object: TSource) {
         title = object.title
         articleDescription = object.description
         urlToImage = URL(string: object.urlToImage ?? "")

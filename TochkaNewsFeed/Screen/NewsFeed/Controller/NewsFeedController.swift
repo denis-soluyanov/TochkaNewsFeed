@@ -9,11 +9,11 @@
 import UIKit
 
 final class NewsFeedController: UIViewController {
+    private let viewModel: NewsFeedViewModel
+    
     private lazy var cellReuseId: String = {
         return String(describing: viewModel.cellViewModelClass.cellClass.self)
     }()
-    
-    private let viewModel: NewsFeedViewModel
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
@@ -23,12 +23,17 @@ final class NewsFeedController: UIViewController {
         return indicator
     }()
     
-    private lazy var tableView: NewsFeedTableView = {
-        let tableView = NewsFeedTableView()
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
         let cellClass = viewModel.cellViewModelClass.cellClass
-        tableView.delegate   = self
-        tableView.dataSource = self
+        tableView.delegate        = self
+        tableView.dataSource      = self
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle  = .singleLine
+        tableView.allowsSelection = false
+        tableView.tableFooterView = UIView()
         tableView.register(cellClass, forCellReuseIdentifier: cellReuseId)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
