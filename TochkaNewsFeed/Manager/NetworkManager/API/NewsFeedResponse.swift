@@ -6,7 +6,7 @@
 //  Copyright © 2020 Denis Soluyanov. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct NewsFeedResponse: Decodable {
     let status       : String
@@ -23,6 +23,7 @@ struct ArticleResponse: Decodable {
     let urlToImage  : String?
     let publishedAt : String
     let content     : String?
+    let urlToCache  : URL?
 }
 
 struct Source: Decodable {

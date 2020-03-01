@@ -12,7 +12,6 @@ import CoreData
 final class NewsFeedViewModel: BaseViewModel {
     private var page: Int = 1
     private let pageSize: Int = 20
-    private var isFetchingAvailable: Bool = true
     
     private lazy var fetchResultsController: NSFetchedResultsController<Article> = {
         let request: NSFetchRequest<Article> = Article.fetchRequest()
@@ -23,11 +22,9 @@ final class NewsFeedViewModel: BaseViewModel {
     
     let screenTitle: String = "NewsFeed"
     
-    var isNeedFetchMore: Bool {
-        return isFetchingAvailable
-    }
-    
     let isDataAvailable = Box<Bool>(false)
+    
+    private(set) var isFetchingAvailable: Bool = true
     
     var numberOfRows: Int {
         return fetchResultsController.fetchedObjects?.count ?? 0
@@ -51,21 +48,25 @@ final class NewsFeedViewModel: BaseViewModel {
     
     private func fetchFromNetwork() {
         let queries = [
-            NewsFeedAPI.keyWords(value: "coronavirus"),
+            NewsFeedAPI.keyWords(value: "bitcoin"),
             NewsFeedAPI.page(value: page),
             NewsFeedAPI.pageSize(value: pageSize),
             NewsFeedAPI.sortBy(value: .publishedAt),
-            NewsFeedAPI.language(value: .english),
+            NewsFeedAPI.language(value: .russian),
             NewsFeedAPI.apiKey(value: APIKey)
         ]
         NewsFeedNetworkManager.shared.fetchNews(with: queries) { [weak self] response in
-            guard let response = response else { return }
-            
+            guard let response = response else {
+                DispatchQueue.main.async {
+                    self?.isDataAvailable.value = false
+                    self?.isFetchingAvailable = false
+                }
+                return
+            }
             self?.saveAsyncInCoreData(response.articles) {
                 DispatchQueue.main.async { [weak self] in
-                    guard let self = self, self.fetchFromCoreData() else {
-                        return
-                    }
+                    guard let self = self, self.fetchFromCoreData() else { return }
+                    
                     self.page += 1
                     self.isDataAvailable.value = true
                     self.isFetchingAvailable = (self.page * self.pageSize) <= response.totalResults

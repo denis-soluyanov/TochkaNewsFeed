@@ -36,9 +36,9 @@ final class NewsFeedCell: UITableViewCell {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
         label.lineBreakMode = .byTruncatingTail
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -68,11 +68,8 @@ final class NewsFeedCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-private extension NewsFeedCell {
     
-    func setConstraintsForPreviewImageView(size: CGSize) {
+    private func setConstraintsForPreviewImageView(size: CGSize) {
         previewImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10)
             .isActive = true
         previewImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
@@ -83,7 +80,7 @@ private extension NewsFeedCell {
             .isActive = true
     }
     
-    func setConstraintsForTitleLabel() {
+    private func setConstraintsForTitleLabel() {
         titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5)
             .isActive = true
         titleLabel.leftAnchor.constraint(equalTo: previewImageView.rightAnchor, constant: 10)
@@ -94,7 +91,7 @@ private extension NewsFeedCell {
             .isActive = true
     }
     
-    func setConstraintsForDescriptionLabel() {
+    private func setConstraintsForDescriptionLabel() {
         descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5)
             .isActive = true
         descriptionLabel.leftAnchor.constraint(equalTo: previewImageView.rightAnchor, constant: 10)
@@ -105,14 +102,14 @@ private extension NewsFeedCell {
             .isActive = true
     }
     
-    func setConstraintsForActivityIndicator() {
+    private func setConstraintsForActivityIndicator() {
         activityIndicator.centerYAnchor.constraint(equalTo: previewImageView.centerYAnchor)
             .isActive = true
         activityIndicator.centerXAnchor.constraint(equalTo: previewImageView.centerXAnchor)
             .isActive = true
     }
     
-    func bindViewModel() {
+    private func bindViewModel() {
         viewModel.title.bind { [unowned self] in
             self.titleLabel.text = $0
         }

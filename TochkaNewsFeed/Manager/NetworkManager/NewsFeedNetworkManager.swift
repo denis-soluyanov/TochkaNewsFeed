@@ -32,7 +32,6 @@ final class NewsFeedNetworkManager {
                 }
                 return
             }
-            
             do {
                 let newsResponse = try JSONDecoder().decode(NewsFeedResponse.self, from: jsonData)
                 completion(newsResponse)
@@ -71,6 +70,7 @@ final class NewsFeedNetworkManager {
                 completion(data, .responseCode(response.statusCode))
                 return
             }
+            CoreDataManager.shared.saveViewContext()
             completion(data, nil)
         }.resume()
     }

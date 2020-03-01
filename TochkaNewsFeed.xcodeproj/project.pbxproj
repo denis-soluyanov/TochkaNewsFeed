@@ -94,11 +94,11 @@
 		B73051F323FFF55200CD77A7 /* TochkaNewsFeed */ = {
 			isa = PBXGroup;
 			children = (
+				B7F4B7C62408636900ABCA90 /* GlobalSettings.swift */,
 				B730520B23FFF6E200CD77A7 /* App */,
-				B74325022402B0E900F0C21F /* BaseComponents */,
-				B74E780D24000BBD00891ACD /* Common */,
+				B74E780D24000BBD00891ACD /* Custom */,
 				B7F4B7C324084B8B00ABCA90 /* Extension */,
-				B7F4B7C524085FBA00ABCA90 /* Screens */,
+				B7F4B7C524085FBA00ABCA90 /* Screen */,
 				B7F4B7C42408522000ABCA90 /* Manager */,
 				B7B65D5124092F7E0069D334 /* Model */,
 				B730520C23FFF71900CD77A7 /* Resources */,
@@ -132,18 +132,10 @@
 			path = Launch;
 			sourceTree = "<group>";
 		};
-		B74325022402B0E900F0C21F /* BaseComponents */ = {
-			isa = PBXGroup;
-			children = (
-				B74E780A24000ACC00891ACD /* BaseViewModel.swift */,
-				B7A7AF662401341600D85AF2 /* BaseCellViewModel.swift */,
-			);
-			path = BaseComponents;
-			sourceTree = "<group>";
-		};
 		B74325112405C77800F0C21F /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B7A7AF662401341600D85AF2 /* BaseCellViewModel.swift */,
 				B7A7AF682401358B00D85AF2 /* NewsFeedCellViewModel.swift */,
 				B7A7AF6A240136DA00D85AF2 /* NewsFeedCell.swift */,
 			);
@@ -153,6 +145,7 @@
 		B74325122405C78100F0C21F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B74E780A24000ACC00891ACD /* BaseViewModel.swift */,
 				B74E780F24000C1600891ACD /* NewsFeedViewModel.swift */,
 				B73051F823FFF55200CD77A7 /* NewsFeedController.swift */,
 			);
@@ -168,15 +161,14 @@
 			path = NewsFeed;
 			sourceTree = "<group>";
 		};
-		B74E780D24000BBD00891ACD /* Common */ = {
+		B74E780D24000BBD00891ACD /* Custom */ = {
 			isa = PBXGroup;
 			children = (
 				B7D8969024013F6C00772615 /* Box.swift */,
-				B7F4B7C62408636900ABCA90 /* GlobalSettings.swift */,
 				B743250F24056BEB00F0C21F /* WebImageView.swift */,
 				B779EDAD2408FFA900467EBB /* NewsFeedTableView.swift */,
 			);
-			path = Common;
+			path = Custom;
 			sourceTree = "<group>";
 		};
 		B7B65D5124092F7E0069D334 /* Model */ = {
@@ -243,13 +235,13 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
-		B7F4B7C524085FBA00ABCA90 /* Screens */ = {
+		B7F4B7C524085FBA00ABCA90 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
 				B74E780C24000B5400891ACD /* NewsFeed */,
 				B730520D23FFF74200CD77A7 /* Launch */,
 			);
-			path = Screens;
+			path = Screen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

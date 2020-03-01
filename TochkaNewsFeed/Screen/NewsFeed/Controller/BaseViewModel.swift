@@ -12,11 +12,11 @@ protocol BaseViewModel: class {
     
     var screenTitle: String { get }
     
-    var numberOfRows: Int { get }
-    
-    var isNeedFetchMore: Bool { get }
-    
     var isDataAvailable: Box<Bool> { get }
+    
+    var isFetchingAvailable: Bool { get }
+    
+    var numberOfRows: Int { get }
     
     var cellViewModelClass: BaseCellViewModel.Type { get }
     

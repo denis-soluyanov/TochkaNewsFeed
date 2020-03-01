@@ -15,20 +15,7 @@ final class ImageManager {
         return ImageManager()
     }()
     
-    func getImage(from imageURL: URL?, completion: @escaping (UIImage?) -> Void) {
-        guard let imageURL = imageURL else {
-            completion(.imagePlaceholder)
-            return
-        }
-        guard !imageURL.isFileURL else {
-//            completion(UIImage(contentsOfFile: imageURL.path))
-            return
-        }
-        if let cachedImage = FileManager.getImageFromCache(filename: imageURL.lastPathComponent) {
-            completion(cachedImage)
-            return
-        }
-        
+    func getImage(from imageURL: URL, completion: @escaping (UIImage?) -> Void) {
         NewsFeedNetworkManager.shared.fetchImage(from: imageURL) { imageResponse in
             guard let image = imageResponse else {
                 completion(.imagePlaceholder)

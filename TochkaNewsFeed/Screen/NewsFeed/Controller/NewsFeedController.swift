@@ -73,7 +73,7 @@ final class NewsFeedController: UIViewController {
             .isActive = true
         tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
             .isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             .isActive = true
     }
     
@@ -110,7 +110,7 @@ extension NewsFeedController {
         let contentHeight = scrollView.contentSize.height
         let diff = contentHeight - scrollView.frame.height
         
-        if offsetY > diff, viewModel.isNeedFetchMore {
+        if offsetY > diff, viewModel.isFetchingAvailable {
             viewModel.fetchContents()
         }
     }
